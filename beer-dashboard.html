@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Beer data dashboard</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Load Uikit -->
+    <link type="text/css" rel="stylesheet" href="js/uikit.almost-flat.min.css" />
+    <script type="text/javascript" src="js/jquery-3.0.0.js"></script>
+    <script type="text/javascript" src="js/uikit.min.js"></script>
+
+    <!-- Load Google Charts -->
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+
+
+<!-- Load External JS files -->
+      <script type="text/javascript" src="js/sankey.js"></script>
+      <script type="text/javascript" src="js/beerquotescript.js"></script>
+      <script type="text/javascript" src="js/beerfoodscript.js"></script>
+      <script type="text/javascript" src="js/beerapi.js"></script>
+      <script type="text/javascript" src="js/map.js"></script>
+      <script src="js/chartPref.js"></script>
+      <script src="js/chartStyles2.js"></script>
+      <script src="js/chartFreq.js"></script>
+      <script src="js/chartMfeel.js"></script>
+      <script src="js/chartAroma.js"></script>
+
+
+
+<!-- External CSS file -->
+    <link type="text/css" rel="stylesheet" href="style.css" />
+      <link href="http://allfont.net/allfont.css?fonts=impact-label" rel="stylesheet" type="text/css" />
+
+
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['map', 'sankey', 'corechart']});
+    </script>
+
+
+
+    <script>
+      google.charts.setOnLoadCallback(drawMap);
+    </script>
+
+<!-- Draw Google Charts -->
+    <script>
+        google.charts.setOnLoadCallback(drawChart);
+    </script>
+
+    <script>
+      google.charts.setOnLoadCallback(drawStylesChart);
+
+    </script>
+
+
+
+
+<!-- Google fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Coming+Soon" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cambay" rel="stylesheet">
+
+
+
+</head>
+
+<body>
+    <div class="uk-container uk-container-center uk-margin-top">
+         <ul class="uk-grid uk-grid-medium" data-uk-grid-margin >
+           <li class="uk-width-small-1-1 uk-width-medium-1-1 uk-width-large-1-1">
+               <div class="uk-panel uk-panel-box" style="text-align: center; ">
+                 <h1 id="title">The London Beersource</h1>
+                 <div class="uk-panel uk-panel-box">
+                   <div class="display: inline">
+                   <ul class="share-buttons" >
+                     <li><a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Figor.gold.ac.uk%2F~bcool001%2Fbeer-dashboard%2Fbeer-dashboard.html&t=London%20Beer%20Dashboard" title="Share on Facebook" target="_blank"><img alt="Share on Facebook" src="images/icons/flat_web_icon_set/black/Facebook.png"></a></li>
+                     <li><a href="https://twitter.com/intent/tweet?source=http%3A%2F%2Figor.gold.ac.uk%2F~bcool001%2Fbeer-dashboard%2Fbeer-dashboard.html&text=London%20Beer%20Dashboard:%20http%3A%2F%2Figor.gold.ac.uk%2F~bcool001%2Fbeer-dashboard%2Fbeer-dashboard.html" target="_blank" title="Tweet"><img alt="Tweet" src="images/icons/flat_web_icon_set/black/Twitter.png"></a></li>
+                     <li><a href="https://plus.google.com/share?url=http%3A%2F%2Figor.gold.ac.uk%2F~bcool001%2Fbeer-dashboard%2Fbeer-dashboard.html" target="_blank" title="Share on Google+"><img alt="Share on Google+" src="images/icons/flat_web_icon_set/black/Google+.png"></a></li>
+                     <li><a href="mailto:?subject=London%20Beer%20Dashboard&body=London%20central%20resource%20for%20all%20things%20beer.%20Learn%20more%20about%20the%20city%20breweries%20and%20brewpubs%20through%20maps%2C%20charts%20and%20interactive%20panels.:%20http%3A%2F%2Figor.gold.ac.uk%2F~bcool001%2Fbeer-dashboard%2Fbeer-dashboard.html" target="_blank" title="Send email"><img alt="Send email" src="images/icons/flat_web_icon_set/black/Email.png"></a></li>
+                   </ul>
+                   </div>
+                   <h2 style="font-family: Gloria Hallelujah">Word to the beer</h2>
+                             <div class="center"  style="max-width: 800px; margin: auto" >
+                               <div id="container1" style="min-height: 50px">
+                                     <body onload="randomQuote()">
+                                   <i><p class="quote-text" id="quote"> </p></i>
+                                   <br />
+                               </div>
+                               <div style="border-bottom: 2px solid black; padding-bottom: 10px; max-width: 600px; margin: auto">
+
+                               </div>
+                             </div>
+
+                 </div>
+                </div>
+           </li>
+
+<!-- Beer quote generator
+<li class="uk-width-small-1-1 uk-width-medium-1-2 uk-width-large-1-1" style="width: 400px; margin: auto">
+
+</li>
+-->
+
+<!-- Map panel -->
+            <li class="uk-width-small-1-1 uk-width-medium-4-6 uk-width-large-4-6">
+                <div class="uk-panel uk-panel-box">
+                    <h2 style="font-family: Raleway">London's Breweries: Mapped</h2>
+                      <p>
+                        Check out 80 of London's best breweries and brewpubs. Click on a beer mug for service hours, recommended beer and directions. Happy Drinking!
+                      </p>
+                        <div id="map_markers_div" style="height:500px; max-width:800px; margin: auto">
+
+                        </div>
+                        <p style="font-size: 0.7em">
+                          <a href="http://londonist.com/2015/02/mapped-londons-breweries-and-brewpubs-by-borough">Source: Londonist</a>
+                        </p>
+                </div>
+            </li>
+
+  <!-- Food pairing -->
+<li class="uk-width-small-1-1 uk-width-medium-2-6 uk-width-large-2-6">
+<div class="uk-panel uk-panel-box">
+<div id="imgholder">
+  <h2 style="font-family: Raleway">Food Pairings</h2>
+    <p>
+      Looking for the perfect brew to go with your meal? We got you covered.
+    </p>
+
+</div>
+<!-- hidden (triggered) images of beers -->
+
+              <img id="lager" src="images/lager.jpg" style="display: none">
+                <p class="captionLager" style="font-size: 0.7em; display: none">
+                  Creative Commons, Pixabay
+                </p>
+              <img id="ipa" src="images/india_pale_ale.jpg" style="display: none">
+              <p class="captionIPA" style="font-size: 0.7em; display: none">
+                Creative Commons, Flickr
+              </p>
+              <img id="wheatbeer" src="images/wheat_beer.jpg" style="display: none">
+              <p class="captionWheat" style="font-size: 0.7em; display: none">
+                Creative Commons, Alexa S. Fotos
+              </p>
+              <img id="stout" src="images/porter.jpg" style="display: none">
+              <p class="captionStout" style="font-size: 0.7em; display: none">
+                Creative Commons, Zach Pischner, Flickr
+              </p>
+              <img id="porter" src="images/stout.jpg" style="display: none">
+              <p class="captionPorter" style="font-size: 0.7em; display: none">
+                Creative Commons, Pixabay
+              </p>
+
+              <!-- dropdown menu -->
+              <div id="selOpt" style="margin-top:15px" class="uk-nav-dropdown">
+                <!-- food choices -->
+                <select name="mySelect" id="mySelect" style="font-size:16px; max-width: 150px !important;">
+                  <option value="whatscooking?">What's cooking?</option>
+                  <option value="chicken">Chicken</option>
+                  <option value="shellfish">Shellfish</option>
+                  <option value="mildcheese">Mild cheese platter</option>
+                  <option value="whitefish">Cod, haddock or flatfish</option>
+                  <option value="lemon">Lemon flavours</option>
+                  <option value="hotdogs">Hot dogs</option>
+                  <option value="thai">Thai food</option>
+                  <option value="burgers">Burgers</option>
+                  <option value="oilyfish">Mackerel, trout, salmon or tuna</option>
+                  <option value="goancurries">Goan fish curry</option>
+                  <option value="mango">Mango flavours</option>
+                  <option value="vietnamese">Vietnamese food</option>
+                  <option value="mexican">Mexican food</option>
+                  <option value="citrusdessert">Citrus-flavoured desserts</option>
+                  <option value="indian">Indian food</option>
+                  <option value="italian">Risotto/Paella</option>
+                  <option value="ham">Home-cooked ham</option>
+                  <option value="pudding">Chocolate pudding</option>
+                  <option value="oyster">Oysters</option>
+                  <option value="grilled">Grilled meats</option>
+                  <option value="fruitydessert">Fig/blackberry desserts</option>
+                  <option value="gamemeat">Vension, rabbit, grouse or pheasant</option>
+                </select>
+                <br></br>
+                <!-- matching beer with food choices -->
+                <div id="lagerText" style="display: none">
+                  <p1>You want a nice, chilled lager</p1>
+                    <br></br>
+                    <button class="uk-button" id="show">Tell me more about lager!</button>
+                      <br></br>
+                        <p2 style="display: none">Lagers originated in 19th century Bohemia and modern variations include pilsner, helles and bock, often brewed in Germany or the Czech Republic. Lagers are made with a bottom fermenting yeast, then conditioned at a low temperature and is nearly always carbonated.</p2>
+                </div>
+                <div id="ipaText" style="display: none">
+                  <p3>Get some ale in you!</p3>
+                    <br></br>
+                    <button class="uk-button" id="show1">Tell me more about India Pale Ale!</button>
+                      <br></br>
+                        <p4 style="display: none">When the British shipped ale over to India in the 19th century, it took months to arrive. To get around the mould-factor, brewers would throw in loads more hops to preserve the brew. Heavy hopping gives the beer its core flavour profile and depending on the you can pick up anything from citrus, elderflower and herbs to tropical fruits and pine needles.</p4>
+                </div>
+                <div id="wheatbeerText" style="display: none">
+                  <p5>Wheat beer is good for you</p5>
+                    <br></br>
+                    <button class="uk-button" id="show2">Tell me more about wheat beer!</button>
+                      <br></br>
+                        <p6 style="display: none">Wheat beers come carbonated with a dull haze, but the colour spectrum ranges from pale lemon to deep orange and darker – German ‘dunkelweizen’ is named after the ‘dark wheat’ that gives the beer its deep brown hue. The amount and variation of wheat added to the mash tun will vary by recipe; Crystal wheat gives a far clearer finish, for example. And whether it’s poured from keg or bottle, it should have a decent fluffy head.</p6>
+                </div>
+                <div id="porterText" style="display: none">
+                  <p7>Porter is BETTER</p7>
+                    <br></br>
+                    <button class="uk-button" id="show3">Tell me more about porter!</button>
+                      <br></br>
+                        <p8 style="display: none">Romanticised as a working class brew with origins in 18th century London, porter is said to be named after the traders and labourers who enjoyed it as a cheap and nourishing beverage. Porter is often lighter in weight and has a crisper finish than stout, but still carries warm caramel and molasses notes.</p8>
+                </div>
+                <div id="stoutText" style="display: none">
+                  <p9>Simply stout</p9>
+                    <br></br>
+                    <button class="uk-button" id="show4">Tell me more about stout!</button>
+                      <br></br>
+                        <p10 style="display: none">A stout started life as the 'stoutest' strongest porter in a brewery. Shortened over the years, stouts are now in a league of their own and represented worldwide by that most famous of stouts - Guinness. Stout is known for its malty flavour, roasted scent, chocolate, coffee and creamy notes, and unique texture.</p10>
+                </div>
+                <p11 style="display: none"><i>Source: BBC Good Food</i></p11>
+                            </div>
+                        </li>
+
+
+  <!-- Poll vis here -->
+    <li class="uk-width-small-1-1 uk-width-medium-1-2 uk-width-large-2-3">
+      <div class="uk-panel uk-panel-box">
+        <h2 style="font-family: Raleway">The Beer Poll</h2>
+          <p>
+            Everybody has a favourite. Here's where our open poll stands. Switch betweeen preferences to see which one's are in the lead, and take our <a href="#poll">live poll</a> at the bottom of the page to contribute to the charts.
+          </p>
+
+        <div style="padding-bottom: 10px; margin: auto; text-align: center">
+          <button style="margin: 10px" class="uk-button" id="chart_Style_button">Styles</button>
+          <button style="margin: 10px" class="uk-button" id="chart_Pref_button">Flavour</button>
+          <button style="margin: 10px" class="uk-button" id="chart_Freq_button">Frequency</button>
+          <button style="margin: 10px" class="uk-button" id="chart_Mfeel_button">Mouthfeel</button>
+          <button style="margin: 10px" class="uk-button" id="chart_Aroma_button">Aroma</button>
+        </div>
+              <div id="chart_div" style="border: 1px fade #ccc" class="chart"></div>
+
+
+          <script>
+
+          //Buttons to reload the charts
+          $(document).ready(function(){
+            $("#chart_Aroma_button").on("click", drawAromaChart)
+          });
+
+          $(document).ready(function(){
+            $("#chart_Mfeel_button").on("click", drawMfeelChart)
+          });
+
+          $(document).ready(function(){
+            $("#chart_Pref_button").on("click", drawPrefChart)
+          });
+
+          $(document).ready(function(){
+            $("#chart_Freq_button").on("click", drawFreqChart)
+          });
+          </script>
+      </li>
+
+
+
+<!-- Beer API vis -->
+  <li class="uk-width-small-1-1 uk-width-medium-1-2 uk-width-large-1-3">
+    <div class="uk-panel uk-panel-box">
+    <h2 style="font-family: Raleway">Do you know your beer?</h2>
+    <div>
+      <h1 id="style"></h1>
+      <h3 style="font-family: Gloria Hallelujah" class="name"></h3>
+      <h4>ABV: <span id="abvMin"></span> - <span id="abvMax"></span>%</h4>
+      <p class="description">
+        Learn more about your go-to drink from one of the world's largets beer databases.
+      </p>
+      <p style="font-size: 0.7em">
+        <a href="http://www.brewerydb.com/">Source: BreweryDB</a>
+      </p>
+    </div>
+
+<!-- <button id="paleale">test</button> -->
+
+<!-- This is the container enabling the JavaScript -->
+<div style="margin: auto" data-uk-dropdown>
+
+    <!-- This is the element toggling the dropdown -->
+    <button class="uk-button">Choose Your Style</button>
+
+    <!-- This is the dropdown -->
+    <div class="uk-dropdown uk-dropdown-scrollable">
+      <div class="uk-grid uk-dropdown-grid">
+        <div class="uk-width-1-2">
+          <ul class="uk-nav uk-nav-dropdown uk-panel">
+
+        <li>
+          <a id='paleale'>Pale Ale</a>
+        </li>
+        <li>
+          <a id="Ipa">IPA</a>
+        </li>
+        <li>
+          <a id="bitter">Bitter</a>
+        </li>
+        <li>
+          <a id="brownale">Brown Ale</a>
+        </li>
+        <li>
+          <a id="scotchale">Scotch Ale</a>
+        </li>
+        <li>
+          <a id="imperial">Imperial Stout</a>
+        </li>
+        <li>
+          <a id="brownporter">Brown Porter</a>
+        </li>
+        <li>
+          <a id="creamstout">Cream Stout</a>
+        </li>
+        <li>
+          <a id="oatmealstout">Oatmeal Stout</a>
+        </li>
+      </ul>
+      </div>
+      <div class="uk-width-1-2">
+        <ul class="uk-nav uk-nav-dropdown uk-panel">
+        <li>
+          <a id="tripel">Belgian Tripel</a>
+        </li>
+        <li>
+          <a id="blonde">Blonde Ale </a>
+        </li>
+        <li>
+          <a id="hef">Hefeweizen</a>
+        </li>
+        <li>
+          <a id="saison">Saison</a>
+        </li>
+        <li>
+          <a id="pilsener">German Pilsener</a>
+        </li>
+        <li>
+          <a id="wheat">Wheat Ale</a>
+        </li>
+        <li>
+          <a id="lager">American Lager</a>
+        </li>
+        </ul>
+      </div>
+      </div>
+    </div>
+
+</div>
+
+<!-- This is the container enabling the JavaScript in click mode -->
+<div data-uk-dropdown="{mode:'click'}">
+
+
+</div>
+
+
+      </div>
+    </li>
+
+    <!-- Beer poll iframce -->
+              <li class="uk-width-small-1-1 uk-width-medium-1-2 uk-width-large-1-3" id="poll">
+
+                    <div id="overlay" class="no-scrolljack">
+                     <p>
+                     </p>
+                    </div>
+                  <div class="uk-panel uk-panel-box"  style="height: 500px; max-width: 350px">
+                          <h2 style="font-family: Raleway">Take Our Poll</h2>
+                          <p>
+                            Have your say and vote in our live poll. What's the best beer?
+                          </p>
+                          <p style="font-size: 10px">
+                            Can't see the poll? <a href="https://goo.gl/forms/6f8YZSLwZpurZrpt2" target="_blank">Click here.</a>
+                          </p>
+                          <div class="scroll-wrapper" style="height: 300px">
+
+
+                          <iframe class="poll-iframe-holder" src="https://docs.google.com/forms/d/e/1FAIpQLScMbKMhzPGWRbhwmeoR99W3RHRw-HyxnYFIpfSLdwpY1zjS7A/viewform?c=0&w=1" style="border:2px #ffffff none;" name="myiFrame" scrolling="yes" frameborder="1" marginheight="0px" marginwidth="0px"></iframe>
+                          </div>
+                    </div>
+                </li>
+
+                <script>
+                var overlay = $('#overlay');
+                overlay.on('click', function (e) {
+                  overlay
+                  .hide()
+                  .off();
+  });
+                </script>
+
+    <!-- Sankey diagram -->
+                <li class="uk-width-small-1-1 uk-width-medium-1-2 uk-width-large-2-3">
+                  <div class="uk-panel uk-panel-box">
+                        <div id="imgholder">
+                          <h2 style="font-family: Raleway">UK Beer Imports/Exports</h2>
+                          <p style="font-family: Raleway">The UK imports twice the amount of beer it exports each year. (Numbers are in thousands of hectolitres).</p>
+                        </div>
+                        <div id="sankey_multiple" class="chart" style="height: 400px;"></div>
+                        </div>
+                        <p style="font-size: 0.7em">
+                          Source: Statista, UK <a href="https://www.statista.com/statistics/623725/beer-imports-to-the-united-kingdom-uk/">Imports</a> and <a href="https://www.statista.com/statistics/623683/beer-exports-from-the-united-kingdom-uk/">Exports</a>
+                        </p>
+                  </li>
+
+
+
+        </ul>
+    </div>
+
+
+    <footer style="background-color: grey; height: 140px;">
+      <br />
+      <div>
+
+
+      <h3 style="color: white; margin: auto; text-align: center; font-family: Gloria Hallelujah">A project by <br />Deep C Data</h3>
+      <p style="font-family: Coming Soon; color: white; text-align: center; font-size: 10px">
+        For the Goldsmiths MADJ program
+      </p>
+      <p style="font-family: Coming Soon; color: white; text-align: center">
+        <a class="twitter" href="https://twitter.com/Chandrashekar82" target="_blank">Chandrashekar</a>,<a class="twitter" href="https://twitter.com/just_giu" target="_blank"> Giulia</a>, <a class="twitter" href="https://twitter.com/alexfargier" target="_blank">Alex</a> and <a class="twitter" href="https://twitter.com/bnj_cooley" target="_blank">Benjamin</a>.
+      </p>
+            </div>
+    </footer>
+</body>
+
+
+
+
+
+</html>

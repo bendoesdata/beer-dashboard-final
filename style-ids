@@ -1,0 +1,55 @@
+Beer style IDs
+
+// 1 - English Pale Ale, 2 - English IPA, 3 - Bitter, 12 - Brown Ale, 15 - Scotch Ale, 16 - British Imperial Stout, 18 - Brown Porter, 20 - Cream Stout, 21 - Oatmeal Stout, 59 - Belgian Tripel, 36 - Blonde Ale, 48 - Hefeweizen, 72 - Saison, 75 - German Pilsener, 112 - Wheat Ale, 95 - North American Lager
+
+<ul class="uk-nav uk-nav-dropdown uk-panel">
+  <li>
+    <a id='paleale'>Pale Ale</a>
+  </li>
+  </button>
+  <li>
+    <a id="ipa">IPA</a>
+  </li>
+  <li>
+    <a id="bitter">Bitter</a>
+  </li>
+  <li>
+    <a id="brownale">Brown Ale</a>
+  </li>
+  <li>
+    <a id="scotchale">Scotch Ale</a>
+  </li>
+  <li>
+    <a id="imperial">Imperial Stout</a>
+  </li>
+  <li>
+    <a id="brownporter">Brown Porter</a>
+  </li>
+  <li>
+    <a id="creamstout">Cream Stout</a>
+  </li>
+  <li>
+    <a id="oatmealstout">Oatmeal Stout</a>
+  </li>
+  <li>
+    <a id="tripel">Belgian Tripel</a>
+  </li>
+  <li>
+    <a id="blonde">Blonde Ale </a>
+  </li>
+  <li>
+    <a id="hef">Hefeweizen</a>
+  </li>
+  <li>
+    <a id="saison">Saison</a>
+  </li>
+  <li>
+    <a id="pilsener">German Pilsener</a>
+  </li>
+  <li>
+    <a id="wheat">Wheat Ale</a>
+  </li>
+  <li>
+    <a id="lager">American Lager</a>
+  </li>
+  </ul>
